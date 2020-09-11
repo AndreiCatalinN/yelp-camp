@@ -10,7 +10,7 @@ const
     // for sanitizing input
     expressSanitizer = require('express-sanitizer'),
     //mongoDB user and pass
-    config = require('../../myCredentials'),
+    config = require('myCredentials'),
     // auth middleware
     passport = require('passport'),
     localStrategy = require('passport-local'),
