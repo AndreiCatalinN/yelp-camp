@@ -56,8 +56,8 @@ passport.use(new localStrategy(User.authenticate()));
 mongoose.connect(
     `mongodb+srv://@yelpcamp.11vik.mongodb.net/yelp-camp?retryWrites=true&w=majority`,
     {
-        user: config.user,
-        pass: config.pass,
+        user: config.user || process.env.DB_USER,
+        pass: config.pass || process.env.DB_PASS,
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false
