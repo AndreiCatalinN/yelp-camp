@@ -1,7 +1,6 @@
 const
     express = require('express'),
     app =  express(),
-    port = 3100,
     mongoose = require('mongoose'),
     //  for parsing forms
     bodyParser = require("body-parser"),
@@ -10,14 +9,17 @@ const
     // for sanitizing input
     expressSanitizer = require('express-sanitizer'),
     //mongoDB user and pass
-    config = require('myCredentials'),
+    // config = require('myCredentials'),
     // auth middleware
     passport = require('passport'),
     localStrategy = require('passport-local'),
     passportLocalMongoose = require('passport-local-mongoose'),
     seedDB = require("./seed"),
     User = require('./models/user'),
-    flash = require('connect-flash');
+    flash = require('connect-flash'),
+    // config = require('../../myCredentials') || process.env,
+    port = process.env.PORT || 3100,
+    IP = process.env.IP || '127.0.0.1';
 
 
 app.use(flash());
@@ -56,8 +58,8 @@ passport.use(new localStrategy(User.authenticate()));
 mongoose.connect(
     `mongodb+srv://@yelpcamp.11vik.mongodb.net/yelp-camp?retryWrites=true&w=majority`,
     {
-        user: config.user || process.env.DB_USER,
-        pass: config.pass || process.env.DB_PASS,
+        user: process.env.DB_USER,
+        pass: process.env.DB_PASS,
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false
@@ -79,6 +81,7 @@ app.use(indexRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
 app.use('/campgrounds', campgroundRoutes);
 
-app.listen(port, () => {
-   console.log(`Yelp camp: http://localhost:${port}`);
+app.listen( port, () => {
+    // process.env.IP, process.env.PORT,
+   console.log(`Yelp camp: http://${IP}:${port}`);
 });
